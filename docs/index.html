@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Customer Churn Prediction — Ankit Kumar</title><meta name="description" content="XGBoost + LightGBM stacking ensemble, SHAP explainability, FastAPI scoring API — F1 0.89."><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box}:root{--cyan:#06b6d4;--purple:#8b5cf6;--bg:#0a0e1a;--card:#111827;--border:#1f2937;--text:#e2e8f0;--muted:#94a3b8}body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.6}a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}.hero{padding:80px 24px 56px;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(6,182,212,.12) 0%,transparent 70%);border-bottom:1px solid var(--border)}.hero.p{background:radial-gradient(ellipse at 50% 0%,rgba(139,92,246,.12) 0%,transparent 70%)}.back{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:.85rem;margin-bottom:28px;padding:7px 16px;border:1px solid var(--border);border-radius:9999px;transition:.2s}.back:hover{border-color:var(--cyan);color:var(--cyan);text-decoration:none}.badge{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;padding:4px 12px;border-radius:9999px;margin-bottom:18px}.badge.c{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);color:var(--cyan)}.badge.p{background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.3);color:#a78bfa}h1{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:800;letter-spacing:-1px;margin-bottom:14px;background:linear-gradient(135deg,#fff 0%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}h1.p{background:linear-gradient(135deg,#fff 0%,#a78bfa 100%);-webkit-background-clip:text;background-clip:text}.subtitle{color:var(--muted);font-size:1rem;max-width:680px;margin:0 auto 28px}.metrics{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}.metric{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 22px;text-align:center;min-width:100px}.mv{font-size:1.6rem;font-weight:800;color:var(--cyan)}.mv.p{color:#a78bfa}.ml{font-size:.7rem;color:var(--muted);margin-top:2px}.cta{display:inline-flex;align-items:center;gap:8px;background:var(--cyan);color:#000;font-weight:700;padding:11px 26px;border-radius:9999px;margin:4px;font-size:.9rem;transition:.2s}.cta:hover{background:#22d3ee;text-decoration:none}.cta.p{background:var(--purple);color:#fff}.cta.p:hover{background:#7c3aed}.cta-o{background:transparent;border:1.5px solid var(--border);color:var(--text)}.cta-o:hover{border-color:var(--cyan);color:var(--cyan);background:transparent;text-decoration:none}main{max-width:880px;margin:0 auto;padding:56px 24px}.sec{margin-bottom:52px}h2{font-size:1.35rem;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:10px}.ic{width:30px;height:30px;background:rgba(6,182,212,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}.ic.p{background:rgba(139,92,246,.15)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:.2s}.card:hover{border-color:rgba(6,182,212,.35)}.card h3{font-size:.95rem;font-weight:600;margin-bottom:7px;color:#fff}.card p{font-size:.83rem;color:var(--muted)}.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}.tag{background:#1e293b;border:1px solid var(--border);color:var(--muted);font-size:.72rem;padding:3px 10px;border-radius:9999px}.tag.c{background:rgba(6,182,212,.1);border-color:rgba(6,182,212,.3);color:var(--cyan)}.tag.p{background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.3);color:#a78bfa}pre{background:#0d1117;border:1px solid var(--border);border-radius:12px;padding:22px;overflow-x:auto;font-size:.8rem;line-height:1.75}code{font-family:'Fira Code','Courier New',monospace}.kw{color:#ff79c6}.fn{color:#50fa7b}.str{color:#f1fa8c}.cm{color:#6272a4}.op{color:var(--cyan)}.cls{color:#8be9fd}.arch{background:#0d1117;border:1px solid var(--border);border-radius:12px;padding:28px 20px;font-family:monospace;font-size:.85rem;line-height:2.2;color:var(--muted);overflow-x:auto;text-align:center}.nd{color:#fff;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.35);border-radius:6px;padding:2px 14px;display:inline-block}.nd.p{background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.35)}.ar{color:var(--cyan)}footer{border-top:1px solid var(--border);padding:36px 24px;text-align:center;color:var(--muted);font-size:.85rem}footer a{color:var(--purple)}</style></head><body>
+  <div class="hero p"><a class="back" href="https://ankitthakur104.github.io">← Portfolio</a><div class="badge p">📉 ML · MLOps</div>
+  <h1 class="p">Customer Churn Prediction System</h1>
+  <p class="subtitle">End-to-end SaaS churn prediction with 40+ engineered features, XGBoost + LightGBM stacking ensemble, SHAP explainability, drift detection, and a real-time FastAPI scoring API.</p>
+  <div class="metrics">
+    <div class="metric"><div class="mv p">0.89</div><div class="ml">F1 Score</div></div>
+    <div class="metric"><div class="mv p">0.93</div><div class="ml">AUC-ROC</div></div>
+    <div class="metric"><div class="mv p">40+</div><div class="ml">Engineered Features</div></div>
+    <div class="metric"><div class="mv p">Auto</div><div class="ml">Drift Retraining</div></div>
+  </div>
+  <a class="cta p" href="https://github.com/ankitthakur104/customer-churn-prediction">View on GitHub</a>
+  <a class="cta cta-o" href="https://ankitthakur104.github.io#projects">All Projects</a>
+  </div>
+  <main>
+  <div class="sec"><h2><span class="ic p">🏗</span>Pipeline Overview</h2>
+  <div class="arch"><span class="nd p">Raw CRM Data</span> <span class="ar">→</span> <span class="nd p">Feature Engineering (40+)</span> <span class="ar">→</span> <span class="nd p">StandardScaler</span>
+  <span class="ar">↓</span>
+  <span class="nd p">XGBoost</span> <span class="ar">+</span> <span class="nd p">LightGBM</span> <span class="ar">→</span> <span class="nd p">Stacking Ensemble (RF meta)</span>
+  <span class="ar">↓</span>
+  <span class="nd p">SHAP Explainability</span> <span class="ar">+</span> <span class="nd p">Drift Detection (KS/PSI)</span> <span class="ar">→</span> <span class="nd p">FastAPI Scoring API</span></div></div>
+  <div class="sec"><h2><span class="ic p">✨</span>Key Features</h2><div class="grid">
+  <div class="card"><h3>Stacking Ensemble</h3><p>XGBoost + LightGBM base models with Random Forest meta-learner via StackingClassifier (5-fold CV).</p></div>
+  <div class="card"><h3>Feature Engineering</h3><p>40+ behavioral features: login rates, support interaction ratios, engagement scores, rolling windows.</p></div>
+  <div class="card"><h3>SHAP Explainability</h3><p>Per-prediction SHAP values explain which features drove the churn score — essential for business trust.</p></div>
+  <div class="card"><h3>Drift Detection</h3><p>KS test + Population Stability Index (PSI) monitor feature distributions and trigger auto-retraining.</p></div>
+  <div class="card"><h3>Real-time Scoring API</h3><p>FastAPI endpoint scores any customer in &lt;100ms using the serialized ensemble + scaler.</p></div>
+  <div class="card"><h3>Docker + CI/CD</h3><p>Containerized with Docker, deployed via CI/CD pipeline with model versioning via MLflow.</p></div>
+  </div></div>
+  <div class="sec"><h2><span class="ic p">💻</span>Stacking Ensemble Code</h2>
+  <pre><code><span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> StackingClassifier, RandomForestClassifier
+  <span class="kw">from</span> xgboost <span class="kw">import</span> XGBClassifier
+  <span class="kw">from</span> lightgbm <span class="kw">import</span> LGBMClassifier
+
+  ensemble <span class="op">=</span> StackingClassifier(
+      estimators<span class="op">=</span>[
+          (<span class="str">"xgb"</span>,  XGBClassifier(n_estimators<span class="op">=300</span>, max_depth<span class="op">=5</span>,
+                                 learning_rate<span class="op">=0.05</span>, subsample<span class="op">=0.8</span>)),
+          (<span class="str">"lgbm"</span>, LGBMClassifier(n_estimators<span class="op">=300</span>, max_depth<span class="op">=5</span>,
+                                  learning_rate<span class="op">=0.05</span>, subsample<span class="op">=0.8</span>)),
+      ],
+      final_estimator<span class="op">=</span>RandomForestClassifier(n_estimators<span class="op">=50</span>),
+      cv<span class="op">=5</span>,
+  )
+  ensemble.fit(X_train, y_train)
+  print(<span class="str">f"F1:  {f1_score(y_test, ensemble.predict(X_test)):.4f}"</span>)
+  print(<span class="str">f"AUC: {roc_auc_score(y_test, ensemble.predict_proba(X_test)[:,1]):.4f}"</span>)</code></pre></div>
+  <div class="sec"><h2><span class="ic p">🛠</span>Tech Stack</h2>
+  <div class="tags"><span class="tag p">Python</span><span class="tag p">XGBoost</span><span class="tag p">LightGBM</span><span class="tag p">Scikit-learn</span><span class="tag">SHAP</span><span class="tag">FastAPI</span><span class="tag">Docker</span><span class="tag">MLflow</span><span class="tag">SciPy</span></div></div>
+  </main><footer><p>Built by <a href="https://ankitthakur104.github.io">Ankit Kumar</a> &mdash; AI/GenAI Engineer &nbsp;·&nbsp; <a href="https://github.com/ankitthakur104">GitHub</a> &nbsp;·&nbsp; <a href="https://ankitthakur104.github.io#projects">All Projects</a></p></footer></body></html>
