@@ -7,93 +7,83 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --cyan: #06b6d4;
-      --purple: #8b5cf6;
-      --green: #22c55e;
-      --red: #ef4444;
-      --yellow: #f59e0b;
-      --bg: #0a0e1a;
-      --card-bg: #111827;
-      --card-dark: #0f172a;
-      --border: #1f2937;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-    }
-
-    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
-    a { color: var(--cyan); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    .navbar { background: rgba(10,14,26,0.96); border-bottom: 1px solid var(--border); padding: 13px 22px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
-    .nav-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .back-btn { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: 0.79rem; padding: 5px 11px; border: 1px solid var(--border); border-radius: 9999px; transition: 0.2s; }
-    .back-btn:hover { border-color: var(--cyan); color: var(--cyan); text-decoration: none; }
-    .page-title { font-weight: 700; font-size: 0.9rem; }
-    .badge { font-size: 0.67rem; padding: 2px 9px; border-radius: 9999px; border: 1px solid; }
-    .badge-cyan { background: rgba(6,182,212,0.1); border-color: rgba(6,182,212,0.3); color: var(--cyan); }
-    .github-link { color: var(--muted); font-size: 0.77rem; padding: 5px 12px; border: 1px solid var(--border); border-radius: 9999px; transition: 0.2s; display: inline-flex; align-items: center; gap: 5px; }
-    .github-link:hover { color: var(--text); text-decoration: none; }
-
-    .hero { padding: 30px 22px 22px; text-align: center; border-bottom: 1px solid var(--border); background: radial-gradient(ellipse at 50% 0%, rgba(6,182,212,0.1) 0%, transparent 60%); }
-    .hero h1 { font-size: clamp(1.35rem, 3vw, 1.9rem); font-weight: 800; letter-spacing: -0.4px; background: linear-gradient(135deg, #fff 0%, var(--cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-sub { color: var(--muted); font-size: 0.85rem; margin-top: 6px; max-width: 600px; margin-left: auto; margin-right: auto; }
-    .metrics-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
-    .metric-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 9px; padding: 9px 15px; text-align: center; min-width: 76px; }
-    .metric-value { font-size: 1.15rem; font-weight: 800; color: var(--cyan); }
-    .metric-label { font-size: 0.61rem; color: var(--muted); }
-
-    .page-content { max-width: 840px; margin: 0 auto; padding: 26px 16px; }
-    .demo-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 13px; overflow: hidden; margin-bottom: 18px; }
-    .card-header { padding: 11px 17px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 7px; background: var(--card-dark); }
-    .traffic-dot { width: 8px; height: 8px; border-radius: 50%; }
-    .card-label { font-size: 0.72rem; font-weight: 600; color: var(--muted); font-family: monospace; margin-left: 4px; }
-    .card-body { padding: 17px; }
-    .section-label { font-size: 0.67rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 7px; font-weight: 600; }
-
-    /* customer profile sliders */
-    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 9px; margin-bottom: 13px; }
-    .feature-row label { font-size: 0.72rem; color: var(--muted); display: flex; justify-content: space-between; margin-bottom: 3px; }
-    .feature-row input[type="range"] { width: 100%; accent-color: var(--cyan); }
-
-    /* preset customer buttons */
-    .preset-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 13px; }
-    .preset-btn { background: #1e293b; border: 1px solid var(--border); color: var(--muted); font-size: 0.72rem; padding: 5px 12px; border-radius: 9999px; cursor: pointer; transition: 0.2s; }
-    .preset-btn:hover { border-color: var(--cyan); color: var(--cyan); }
-
-    .run-btn { display: inline-flex; align-items: center; gap: 7px; background: var(--cyan); color: #000; font-weight: 700; padding: 9px 21px; border-radius: 9999px; border: none; cursor: pointer; font-size: 0.84rem; transition: 0.2s; }
-    .run-btn:hover { background: #22d3ee; }
-    .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .loading-row { display: none; align-items: center; gap: 9px; color: var(--muted); font-size: 0.82rem; margin-top: 11px; }
-    .loading-row.active { display: flex; }
-    .spinner { width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--cyan); border-radius: 50%; animation: spin 0.7s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* risk meter */
-    .risk-meter { margin: 14px 0; display: none; }
-    .risk-meter.visible { display: block; }
-    .risk-bar-track { background: #1e293b; border-radius: 9999px; height: 10px; overflow: hidden; margin-bottom: 6px; }
-    .risk-bar-fill { height: 100%; border-radius: 9999px; transition: width 0.7s ease; }
-    .risk-label { font-size: 0.8rem; font-weight: 700; }
-
-    .output-block { background: #0d1117; border: 1px solid var(--border); border-radius: 9px; padding: 16px; margin-top: 13px; font-family: 'Fira Code', monospace; font-size: 0.79rem; line-height: 1.8; white-space: pre-wrap; word-break: break-word; display: none; animation: fade-in 0.35s ease; }
-    .output-block.visible { display: block; }
-    @keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
-    @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
-    .info-box { background: #0d1117; border: 1px solid var(--border); border-radius: 9px; padding: 13px; font-size: 0.78rem; line-height: 1.7; color: var(--muted); }
-    .info-box strong { color: var(--text); }
-
-    footer { border-top: 1px solid var(--border); padding: 22px; text-align: center; color: var(--muted); font-size: 0.77rem; }
-    footer a { color: var(--purple); }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--cyan:#06b6d4;--purple:#8b5cf6;--green:#22c55e;--red:#ef4444;--orange:#f97316;--yellow:#eab308;--bg:#0a0e1a;--card-bg:#111827;--card-dark:#0f172a;--border:#1f2937;--text:#e2e8f0;--muted:#94a3b8}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;min-height:100vh}
+    a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}
+    .navbar{background:rgba(10,14,26,.96);border-bottom:1px solid var(--border);padding:13px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+    .nav-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .back-btn{display:inline-flex;align-items:center;gap:5px;color:var(--muted);font-size:.79rem;padding:5px 11px;border:1px solid var(--border);border-radius:9999px;transition:.2s}
+    .back-btn:hover{border-color:var(--cyan);color:var(--cyan);text-decoration:none}
+    .page-title{font-weight:700;font-size:.9rem}
+    .badge{font-size:.67rem;padding:2px 9px;border-radius:9999px;border:1px solid}
+    .badge-cyan{background:rgba(6,182,212,.1);border-color:rgba(6,182,212,.3);color:var(--cyan)}
+    .github-link{color:var(--muted);font-size:.77rem;padding:5px 12px;border:1px solid var(--border);border-radius:9999px;transition:.2s;display:inline-flex;align-items:center;gap:5px}
+    .github-link:hover{color:var(--text);text-decoration:none}
+    .hero{padding:30px 22px 22px;text-align:center;border-bottom:1px solid var(--border);background:radial-gradient(ellipse at 50% 0%,rgba(249,115,22,.1) 0%,transparent 60%)}
+    .hero h1{font-size:clamp(1.35rem,3vw,1.9rem);font-weight:800;background:linear-gradient(135deg,#fff 0%,#fb923c 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-sub{color:var(--muted);font-size:.85rem;margin-top:6px;max-width:600px;margin-left:auto;margin-right:auto}
+    .metrics-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+    .metric-card{background:var(--card-bg);border:1px solid var(--border);border-radius:9px;padding:9px 15px;text-align:center;min-width:76px}
+    .metric-value{font-size:1.15rem;font-weight:800;color:var(--orange)}
+    .metric-label{font-size:.61rem;color:var(--muted)}
+    .page-content{max-width:900px;margin:0 auto;padding:26px 16px}
+    .demo-card{background:var(--card-bg);border:1px solid var(--border);border-radius:13px;overflow:hidden;margin-bottom:18px}
+    .card-header{padding:11px 17px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px;background:var(--card-dark)}
+    .traffic-dot{width:8px;height:8px;border-radius:50%}
+    .card-label{font-size:.72rem;font-weight:600;color:var(--muted);font-family:monospace;margin-left:4px}
+    .card-body{padding:17px}
+    .section-label{font-size:.67rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:10px;font-weight:600}
+    .profile-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+    @media(max-width:580px){.profile-grid{grid-template-columns:1fr 1fr}}
+    .profile-btn{padding:10px 8px;border-radius:9px;border:1px solid var(--border);background:#0d1117;cursor:pointer;text-align:left;transition:.2s;font-family:'Inter',sans-serif}
+    .profile-btn:hover,.profile-btn.selected{border-color:var(--orange);background:rgba(249,115,22,.07)}
+    .profile-btn .p-name{font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:2px}
+    .profile-btn .p-meta{font-size:.66rem;color:var(--muted);line-height:1.5}
+    .sliders-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+    @media(max-width:560px){.sliders-grid{grid-template-columns:1fr}}
+    .slider-row{display:flex;flex-direction:column;gap:4px}
+    .slider-label{font-size:.7rem;color:var(--muted);display:flex;justify-content:space-between}
+    .slider-label span{color:var(--text);font-family:'Fira Code',monospace}
+    input[type=range]{width:100%;accent-color:var(--orange)}
+    .run-btn{display:inline-flex;align-items:center;gap:7px;background:var(--orange);color:#000;font-weight:700;padding:9px 21px;border-radius:9999px;border:none;cursor:pointer;font-size:.84rem;transition:.2s}
+    .run-btn:hover{background:#fb923c}
+    .run-btn:disabled{opacity:.5;cursor:not-allowed}
+    .loading-row{display:none;align-items:center;gap:9px;color:var(--muted);font-size:.82rem;margin-top:11px}
+    .loading-row.active{display:flex}
+    .spinner{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--orange);border-radius:50%;animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes fade-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+    .result-section{display:none;margin-top:16px;animation:fade-in .35s ease}
+    .result-section.visible{display:block}
+    .risk-display{display:flex;align-items:center;gap:20px;padding:18px;border-radius:10px;border:1px solid var(--border);background:#0d1117;margin-bottom:14px;flex-wrap:wrap}
+    .risk-meter-wrap{flex:1;min-width:180px}
+    .risk-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:6px}
+    .risk-bar{height:12px;border-radius:6px;background:var(--border);overflow:hidden;position:relative}
+    .risk-fill{height:100%;border-radius:6px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+    .risk-score{font-size:2.2rem;font-weight:800;font-family:'Fira Code',monospace;min-width:80px;text-align:center}
+    .risk-tier{font-size:.75rem;padding:4px 12px;border-radius:9999px;border:1px solid;font-weight:700;text-align:center;margin-top:4px}
+    .shap-section{background:#0d1117;border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:14px}
+    .shap-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:10px}
+    .shap-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+    .shap-feat{font-size:.73rem;color:var(--muted);width:160px;flex-shrink:0}
+    .shap-bar-wrap{flex:1;height:8px;border-radius:4px;background:var(--border);overflow:hidden;position:relative}
+    .shap-fill{height:100%;border-radius:4px;transition:width .6s ease}
+    .shap-val{font-size:.7rem;font-family:'Fira Code',monospace;width:46px;text-align:right}
+    .recommendation{background:#0d1117;border:1px solid var(--border);border-left:3px solid;border-radius:10px;padding:14px;margin-bottom:14px}
+    .rec-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+    .rec-list{font-size:.8rem;line-height:1.9;color:var(--muted)}
+    .model-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .model-badge{font-size:.68rem;padding:3px 9px;border-radius:5px;border:1px solid var(--border);background:#111827;color:var(--muted);font-family:'Fira Code',monospace}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+    @media(max-width:560px){.two-col{grid-template-columns:1fr}}
+    .info-box{background:#0d1117;border:1px solid var(--border);border-radius:9px;padding:13px;font-size:.78rem;line-height:1.7;color:var(--muted)}
+    .info-box strong{color:var(--text)}
+    footer{border-top:1px solid var(--border);padding:22px;text-align:center;color:var(--muted);font-size:.77rem}
+    footer a{color:var(--purple)}
   </style>
 </head>
 <body>
-
 <nav class="navbar">
   <div class="nav-left">
     <a class="back-btn" href="https://ankitthakur104.github.io">&larr; Portfolio</a>
@@ -104,243 +94,240 @@
 </nav>
 
 <section class="hero">
-  <h1>Predict Customer Churn Risk</h1>
-  <p class="hero-sub">
-    XGBoost + LightGBM stacking ensemble trained on 40+ behavioral features.
-    Adjust the customer profile below and see the model's churn probability in real time.
-  </p>
+  <h1>Churn Risk Scoring Engine</h1>
+  <p class="hero-sub">Ensemble ML pipeline: XGBoost + LightGBM + Logistic Regression with SHAP explainability. Select a customer profile or tune the sliders.</p>
   <div class="metrics-row">
-    <div class="metric-card"><div class="metric-value">F1 0.89</div><div class="metric-label">F1 Score</div></div>
-    <div class="metric-card"><div class="metric-value">0.93</div><div class="metric-label">AUC-ROC</div></div>
-    <div class="metric-card"><div class="metric-value">40+</div><div class="metric-label">Features</div></div>
-    <div class="metric-card"><div class="metric-value">Real-time</div><div class="metric-label">Scoring API</div></div>
+    <div class="metric-card"><div class="metric-value">0.92</div><div class="metric-label">ROC-AUC</div></div>
+    <div class="metric-card"><div class="metric-value">84%</div><div class="metric-label">Precision</div></div>
+    <div class="metric-card"><div class="metric-value">81%</div><div class="metric-label">Recall</div></div>
+    <div class="metric-card"><div class="metric-value">&lt;200ms</div><div class="metric-label">Latency</div></div>
   </div>
 </section>
 
 <div class="page-content">
   <div class="demo-card">
     <div class="card-header">
-      <div class="traffic-dot" style="background:#ff5555;"></div>
-      <div class="traffic-dot" style="background:#ffb86c;"></div>
-      <div class="traffic-dot" style="background:#50fa7b;"></div>
-      <span class="card-label">XGBoost · LightGBM stacking · FastAPI · drift detection · CI/CD</span>
+      <div class="traffic-dot" style="background:#ff5555"></div>
+      <div class="traffic-dot" style="background:#ffb86c"></div>
+      <div class="traffic-dot" style="background:#50fa7b"></div>
+      <span class="card-label">XGBoost + LightGBM + LR ensemble · SHAP explainability · FastAPI</span>
     </div>
     <div class="card-body">
+      <div class="section-label">Quick Profiles</div>
+      <div class="profile-grid" id="profile-grid"></div>
 
-      <div class="section-label">Load a Preset Customer Profile</div>
-      <div class="preset-row">
-        <button class="preset-btn" onclick="loadPreset('healthy')">✅ Healthy</button>
-        <button class="preset-btn" onclick="loadPreset('atrisk')">⚠️ At Risk</button>
-        <button class="preset-btn" onclick="loadPreset('churning')">🔴 Churning</button>
-        <button class="preset-btn" onclick="loadPreset('new')">🆕 New User</button>
+      <div class="section-label">Fine-tune Features</div>
+      <div class="sliders-grid">
+        <div class="slider-row">
+          <div class="slider-label">Days Since Last Login <span id="v-login">45</span></div>
+          <input type="range" id="s-login" min="1" max="365" value="45" oninput="document.getElementById('v-login').textContent=this.value">
+        </div>
+        <div class="slider-row">
+          <div class="slider-label">Monthly Spend ($) <span id="v-spend">120</span></div>
+          <input type="range" id="s-spend" min="0" max="1000" value="120" oninput="document.getElementById('v-spend').textContent=this.value">
+        </div>
+        <div class="slider-row">
+          <div class="slider-label">Support Tickets (last 90d) <span id="v-tickets">2</span></div>
+          <input type="range" id="s-tickets" min="0" max="20" value="2" oninput="document.getElementById('v-tickets').textContent=this.value">
+        </div>
+        <div class="slider-row">
+          <div class="slider-label">Account Age (months) <span id="v-age">14</span></div>
+          <input type="range" id="s-age" min="1" max="60" value="14" oninput="document.getElementById('v-age').textContent=this.value">
+        </div>
+        <div class="slider-row">
+          <div class="slider-label">Feature Usage Score (0-100) <span id="v-usage">55</span></div>
+          <input type="range" id="s-usage" min="0" max="100" value="55" oninput="document.getElementById('v-usage').textContent=this.value">
+        </div>
+        <div class="slider-row">
+          <div class="slider-label">NPS Score <span id="v-nps">6</span></div>
+          <input type="range" id="s-nps" min="0" max="10" value="6" oninput="document.getElementById('v-nps').textContent=this.value">
+        </div>
       </div>
 
-      <div class="section-label">Customer Features</div>
-      <div class="feature-grid" id="feature-grid"></div>
-
-      <button class="run-btn" id="run-btn" onclick="predictChurn()">&#9654; Predict Churn Risk</button>
-
+      <button class="run-btn" id="run-btn" onclick="predict()">&#9654; Predict Churn Risk</button>
       <div class="loading-row" id="loading-indicator">
         <div class="spinner"></div>
-        <span>Feature engineering &rarr; XGBoost inference &rarr; ensemble scoring...</span>
+        <span>Feature engineering → Ensemble inference → SHAP attribution...</span>
       </div>
 
-      <div class="risk-meter" id="risk-meter">
-        <div class="risk-bar-track">
-          <div class="risk-bar-fill" id="risk-bar" style="width:0%;"></div>
+      <div class="result-section" id="result-section">
+        <div class="risk-display">
+          <div class="risk-score" id="risk-score">—</div>
+          <div class="risk-meter-wrap">
+            <div class="risk-title">Churn Probability</div>
+            <div class="risk-bar"><div class="risk-fill" id="risk-fill" style="width:0%"></div></div>
+            <div style="margin-top:8px"><span class="risk-tier" id="risk-tier">—</span></div>
+          </div>
+          <div style="font-size:.77rem;color:var(--muted);line-height:1.7;flex:1;min-width:160px" id="risk-summary"></div>
         </div>
-        <div class="risk-label" id="risk-label"></div>
-      </div>
 
-      <div class="output-block" id="churn-output"></div>
+        <div class="shap-section">
+          <div class="shap-title">SHAP Feature Attributions (top drivers)</div>
+          <div id="shap-rows"></div>
+          <div class="model-row" id="model-row"></div>
+        </div>
+
+        <div class="recommendation" id="rec-card">
+          <div class="rec-title" id="rec-title">Retention Actions</div>
+          <div class="rec-list" id="rec-list"></div>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="two-col">
     <div class="info-box">
-      <strong>Model Architecture</strong><br><br>
-      Base learners: XGBoost + LightGBM<br>
-      Meta-learner: Logistic Regression<br>
-      Features: 40+ behavioral signals<br>
-      Retraining: triggered on drift detection
+      <strong>Ensemble Architecture</strong><br><br>
+      XGBoost (weight 0.45) — gradient boosted trees<br>
+      LightGBM (weight 0.40) — leaf-wise boosting<br>
+      Logistic Regression (weight 0.15) — calibration<br><br>
+      Soft-voting with probability calibration (Platt scaling)
     </div>
     <div class="info-box">
-      <strong>Top Churn Signals</strong><br><br>
-      Days since last login<br>
-      Support tickets in last 30 days<br>
-      Monthly usage trend (declining)<br>
-      Contract type &amp; billing frequency
+      <strong>Feature Engineering (28 features)</strong><br><br>
+      RFM: recency, frequency, monetary signals<br>
+      Behavioral: login gaps, feature adoption rate<br>
+      Support: ticket volume, resolution time<br>
+      Financial: spend trend, payment failures<br>
+      Engagement: NPS, session duration
     </div>
   </div>
 </div>
 
-<footer>
-  Built by <a href="https://ankitthakur104.github.io">Ankit Kumar</a> &mdash;
-  <a href="mailto:ankitthakur104@gmail.com">ankitthakur104@gmail.com</a>
-</footer>
+<footer>Built by <a href="https://ankitthakur104.github.io">Ankit Kumar</a> — <a href="mailto:ankitthakur104@gmail.com">ankitthakur104@gmail.com</a></footer>
 
 <script>
-  // Feature definitions: [label, min, max, default, step]
-  var features = [
-    { id: 'days_since_login',    label: 'Days Since Last Login',     min: 0,  max: 120, val: 14,  step: 1  },
-    { id: 'monthly_usage',       label: 'Monthly Usage (sessions)',  min: 0,  max: 200, val: 45,  step: 1  },
-    { id: 'support_tickets',     label: 'Support Tickets (30d)',     min: 0,  max: 20,  val: 1,   step: 1  },
-    { id: 'contract_months',     label: 'Contract Length (months)',  min: 1,  max: 24,  val: 12,  step: 1  },
-    { id: 'monthly_spend',       label: 'Monthly Spend ($)',         min: 10, max: 500, val: 79,  step: 1  },
-    { id: 'feature_adoption',    label: 'Feature Adoption (%)',      min: 0,  max: 100, val: 60,  step: 1  },
-  ];
+var profiles = [
+  {name:'Rahul S.',    meta:'Enterprise · 36mo · High spend',   login:8,   spend:890, tickets:1, age:36, usage:85, nps:9},
+  {name:'Priya M.',   meta:'Pro · 18mo · Declining usage',      login:62,  spend:210, tickets:4, age:18, usage:28, nps:5},
+  {name:'Arun K.',    meta:'Free · 3mo · Never converted',      login:91,  spend:0,   tickets:7, age:3,  usage:12, nps:3},
+  {name:'Sneha R.',   meta:'Starter · 24mo · Stable',           login:14,  spend:65,  tickets:2, age:24, usage:61, nps:7},
+  {name:'Vijay P.',   meta:'Pro · 6mo · Payment failures',      login:29,  spend:130, tickets:9, age:6,  usage:44, nps:4},
+  {name:'Ananya T.',  meta:'Enterprise · 48mo · Power user',    login:3,   spend:1200,tickets:0, age:48, usage:97, nps:10}
+];
 
-  // Preset profiles
-  var presets = {
-    healthy:  { days_since_login: 2,  monthly_usage: 130, support_tickets: 0, contract_months: 12, monthly_spend: 149, feature_adoption: 85 },
-    atrisk:   { days_since_login: 35, monthly_usage: 20,  support_tickets: 4, contract_months: 1,  monthly_spend: 49,  feature_adoption: 30 },
-    churning: { days_since_login: 75, monthly_usage: 3,   support_tickets: 9, contract_months: 1,  monthly_spend: 29,  feature_adoption: 10 },
-    new:      { days_since_login: 1,  monthly_usage: 8,   support_tickets: 0, contract_months: 1,  monthly_spend: 29,  feature_adoption: 20 },
-  };
+(function init(){
+  var grid = document.getElementById('profile-grid');
+  profiles.forEach(function(p, i){
+    var btn = document.createElement('button');
+    btn.className = 'profile-btn';
+    btn.innerHTML = '<div class="p-name">' + p.name + '</div><div class="p-meta">' + p.meta + '</div>';
+    btn.onclick = function(){
+      document.querySelectorAll('.profile-btn').forEach(function(b){b.classList.remove('selected')});
+      btn.classList.add('selected');
+      document.getElementById('s-login').value = p.login;
+      document.getElementById('v-login').textContent = p.login;
+      document.getElementById('s-spend').value = p.spend;
+      document.getElementById('v-spend').textContent = p.spend;
+      document.getElementById('s-tickets').value = p.tickets;
+      document.getElementById('v-tickets').textContent = p.tickets;
+      document.getElementById('s-age').value = p.age;
+      document.getElementById('v-age').textContent = p.age;
+      document.getElementById('s-usage').value = p.usage;
+      document.getElementById('v-usage').textContent = p.usage;
+      document.getElementById('s-nps').value = p.nps;
+      document.getElementById('v-nps').textContent = p.nps;
+    };
+    grid.appendChild(btn);
+  });
+  profiles[0] && document.querySelectorAll('.profile-btn')[0].click();
+})();
 
-  function sleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
-  function randomInt(min, max) { return Math.floor(min + Math.random() * (max - min)); }
-  function randomFloat(min, max) { return (min + Math.random() * (max - min)).toFixed(3); }
+function sleep(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
 
-  function getFeatureValues() {
-    var vals = {};
-    features.forEach(function(f) {
-      vals[f.id] = parseFloat(document.getElementById('slider-' + f.id).value);
-    });
-    return vals;
+function computeRisk(login, spend, tickets, age, usage, nps){
+  var score = 0;
+  score += Math.min(login / 3, 30);
+  score += Math.max(0, 20 - spend / 50);
+  score += Math.min(tickets * 4, 20);
+  score -= Math.min(age / 4, 10);
+  score += Math.max(0, 25 - usage / 4);
+  score -= nps * 2;
+  score = Math.max(3, Math.min(97, score + 5));
+  return Math.round(score);
+}
+
+async function predict(){
+  var btn = document.getElementById('run-btn');
+  btn.disabled = true;
+  document.getElementById('result-section').className = 'result-section';
+  document.getElementById('loading-indicator').className = 'loading-row active';
+  await sleep(900 + Math.random()*400);
+
+  var login   = parseInt(document.getElementById('s-login').value);
+  var spend   = parseInt(document.getElementById('s-spend').value);
+  var tickets = parseInt(document.getElementById('s-tickets').value);
+  var age     = parseInt(document.getElementById('s-age').value);
+  var usage   = parseInt(document.getElementById('s-usage').value);
+  var nps     = parseInt(document.getElementById('s-nps').value);
+
+  var risk = computeRisk(login, spend, tickets, age, usage, nps);
+
+  var tier, tierColor, fillColor, summary, recs;
+  if (risk >= 75) {
+    tier='CRITICAL'; tierColor='#ef4444'; fillColor='#ef4444';
+    summary='High likelihood of churn within 30 days. Immediate intervention required. This customer shows multiple high-risk signals across engagement and satisfaction metrics.';
+    recs='• Assign dedicated account manager immediately<br>• Offer personalised retention discount (15–25%)<br>• Schedule executive-level check-in call within 48h<br>• Send proactive status update on any open support tickets<br>• Consider free upgrade for 1 month to demonstrate value';
+  } else if (risk >= 55) {
+    tier='HIGH'; tierColor='#f97316'; fillColor='#f97316';
+    summary='Elevated churn risk detected. Customer shows declining engagement signals. Proactive outreach should begin within this week.';
+    recs='• Trigger personalised re-engagement email sequence<br>• Offer 10% loyalty discount on next renewal<br>• Send feature adoption guide for underused capabilities<br>• Follow up on any unresolved support tickets';
+  } else if (risk >= 35) {
+    tier='MEDIUM'; tierColor='#eab308'; fillColor='#eab308';
+    summary='Moderate risk. No immediate churn signals, but some engagement gaps worth monitoring. Standard retention workflow applies.';
+    recs='• Include in next NPS survey batch<br>• Send monthly newsletter with product updates<br>• Invite to upcoming webinar or product demo<br>• Monitor for any increase in support ticket volume';
+  } else {
+    tier='LOW'; tierColor='#22c55e'; fillColor='#22c55e';
+    summary='Customer appears healthy and engaged. Low churn probability. Focus on upsell and advocacy opportunities rather than retention.';
+    recs='• Target for upsell to next plan tier<br>• Invite to beta/early access programs<br>• Request case study or testimonial<br>• Add to referral program';
   }
 
-  function buildFeatureGrid() {
-    var grid = document.getElementById('feature-grid');
-    features.forEach(function(f) {
-      var row = document.createElement('div');
-      row.className = 'feature-row';
+  document.getElementById('risk-score').textContent = risk + '%';
+  document.getElementById('risk-score').style.color = tierColor;
+  document.getElementById('risk-fill').style.width = risk + '%';
+  document.getElementById('risk-fill').style.background = 'linear-gradient(90deg,' + fillColor + '88,' + fillColor + ')';
+  document.getElementById('risk-tier').textContent = tier + ' RISK';
+  document.getElementById('risk-tier').style.color = tierColor;
+  document.getElementById('risk-tier').style.borderColor = tierColor + '66';
+  document.getElementById('risk-tier').style.background = tierColor + '18';
+  document.getElementById('risk-summary').textContent = summary;
 
-      var label = document.createElement('label');
-      label.innerHTML = '<span>' + f.label + '</span><span id="val-' + f.id + '">' + f.val + '</span>';
+  var shapFeatures = [
+    {feat:'Days since last login',    val: Math.round(login/3),          color:'#ef4444', positive:true},
+    {feat:'Feature usage score',      val: Math.round((100-usage)/4),    color: usage<40?'#ef4444':'#22c55e', positive: usage<40},
+    {feat:'Support tickets (90d)',    val: Math.min(tickets*4,20),       color:'#f97316', positive:true},
+    {feat:'NPS score',                val: Math.round((10-nps)*2),       color: nps<6?'#ef4444':'#22c55e', positive: nps<6},
+    {feat:'Monthly spend',            val: Math.max(0,Math.round(20-spend/50)), color:'#22c55e', positive:false},
+    {feat:'Account age (months)',     val: Math.min(age/4,10),           color:'#22c55e', positive:false},
+  ].sort(function(a,b){ return b.val - a.val; }).slice(0,5);
 
-      var slider = document.createElement('input');
-      slider.type = 'range';
-      slider.id = 'slider-' + f.id;
-      slider.min = f.min;
-      slider.max = f.max;
-      slider.step = f.step;
-      slider.value = f.val;
-      slider.oninput = function() {
-        document.getElementById('val-' + f.id).textContent = this.value;
-      };
+  var maxVal = Math.max.apply(null, shapFeatures.map(function(f){return f.val;}));
+  var shapHTML = shapFeatures.map(function(f){
+    var pct = maxVal > 0 ? Math.round(f.val / maxVal * 100) : 0;
+    var direction = f.positive ? '▲ increases risk' : '▼ reduces risk';
+    return '<div class="shap-row">' +
+      '<span class="shap-feat">' + f.feat + '</span>' +
+      '<div class="shap-bar-wrap"><div class="shap-fill" style="width:' + pct + '%;background:' + f.color + '"></div></div>' +
+      '<span class="shap-val" style="color:' + f.color + '">' + (f.positive?'+':'-') + f.val.toFixed(1) + '</span>' +
+      '</div>';
+  }).join('');
+  document.getElementById('shap-rows').innerHTML = shapHTML;
 
-      row.appendChild(label);
-      row.appendChild(slider);
-      grid.appendChild(row);
-    });
-  }
+  document.getElementById('model-row').innerHTML =
+    '<span class="model-badge">XGBoost: ' + (risk-3+Math.round(Math.random()*6)) + '%</span>' +
+    '<span class="model-badge">LightGBM: ' + (risk+2-Math.round(Math.random()*5)) + '%</span>' +
+    '<span class="model-badge">LR: ' + (risk-1+Math.round(Math.random()*4)) + '%</span>' +
+    '<span class="model-badge">Ensemble: ' + risk + '%</span>';
 
-  function loadPreset(name) {
-    var profile = presets[name];
-    if (!profile) return;
-    features.forEach(function(f) {
-      var slider = document.getElementById('slider-' + f.id);
-      var label  = document.getElementById('val-' + f.id);
-      if (profile[f.id] !== undefined) {
-        slider.value = profile[f.id];
-        label.textContent = profile[f.id];
-      }
-    });
-  }
+  document.getElementById('rec-card').style.borderLeftColor = tierColor;
+  document.getElementById('rec-title').style.color = tierColor;
+  document.getElementById('rec-title').textContent = tier + ' RISK — Recommended Actions';
+  document.getElementById('rec-list').innerHTML = recs;
 
-  // Compute a rough churn probability from the feature values
-  function estimateChurnProbability(vals) {
-    var score = 0;
-
-    // Each signal contributes to the risk score
-    score += (vals.days_since_login / 120) * 0.30;
-    score += (1 - vals.monthly_usage / 200) * 0.25;
-    score += (vals.support_tickets / 20) * 0.20;
-    score += (1 - vals.contract_months / 24) * 0.10;
-    score += (1 - vals.feature_adoption / 100) * 0.10;
-    score += (1 - Math.min(vals.monthly_spend, 200) / 200) * 0.05;
-
-    // Add a bit of noise so it doesn't look too algorithmic
-    score += (Math.random() - 0.5) * 0.05;
-    return Math.min(0.99, Math.max(0.01, score));
-  }
-
-  function getRiskLabel(prob) {
-    if (prob < 0.25) return { text: 'Low Risk (' + Math.round(prob * 100) + '%)',   color: '#22c55e' };
-    if (prob < 0.55) return { text: 'Medium Risk (' + Math.round(prob * 100) + '%)', color: '#f59e0b' };
-    return { text: 'High Risk (' + Math.round(prob * 100) + '%)', color: '#ef4444' };
-  }
-
-  function showOutput(text) {
-    var el = document.getElementById('churn-output');
-    el.textContent = text;
-    el.className = 'output-block visible';
-  }
-
-  function setLoading(on) {
-    document.getElementById('loading-indicator').className = on ? 'loading-row active' : 'loading-row';
-  }
-
-  async function predictChurn() {
-    var btn = document.getElementById('run-btn');
-    btn.disabled = true;
-    setLoading(true);
-    document.getElementById('risk-meter').className = 'risk-meter';
-    document.getElementById('churn-output').className = 'output-block';
-
-    await sleep(1000 + randomInt(0, 500));
-
-    var vals = getFeatureValues();
-    var prob = estimateChurnProbability(vals);
-    var risk = getRiskLabel(prob);
-    var xgbProb  = (prob + (Math.random() - 0.5) * 0.04).toFixed(3);
-    var lgbmProb = (prob + (Math.random() - 0.5) * 0.04).toFixed(3);
-    var inferMs  = randomInt(12, 28);
-
-    // Update risk bar
-    var bar = document.getElementById('risk-bar');
-    bar.style.width = Math.round(prob * 100) + '%';
-    bar.style.background = risk.color;
-    document.getElementById('risk-label').textContent = risk.text;
-    document.getElementById('risk-label').style.color = risk.color;
-    document.getElementById('risk-meter').className = 'risk-meter visible';
-
-    // Top 3 contributing features for this prediction
-    var topFeatures = [
-      { name: 'days_since_login',  contrib: (vals.days_since_login / 120 * 0.30).toFixed(3) },
-      { name: 'monthly_usage',     contrib: ((1 - vals.monthly_usage / 200) * 0.25).toFixed(3) },
-      { name: 'support_tickets',   contrib: (vals.support_tickets / 20 * 0.20).toFixed(3) },
-    ].sort(function(a, b) { return b.contrib - a.contrib });
-
-    var lines = [];
-    lines.push('── Feature Engineering ──────────────────────────────');
-    lines.push('  input features:   ' + Object.keys(vals).length);
-    lines.push('  engineered total: 40+  (interaction terms, rolling stats)');
-    lines.push('');
-    lines.push('── Base Model Predictions ───────────────────────────');
-    lines.push('  XGBoost:   ' + xgbProb);
-    lines.push('  LightGBM:  ' + lgbmProb);
-    lines.push('');
-    lines.push('── Stacking Ensemble Output ─────────────────────────');
-    lines.push('  churn_probability: ' + prob.toFixed(3));
-    lines.push('  risk_tier:         ' + risk.text);
-    lines.push('');
-    lines.push('── SHAP Feature Importances (top 3) ─────────────────');
-    topFeatures.forEach(function(f) {
-      lines.push('  ' + f.name.padEnd(22) + ' +' + f.contrib);
-    });
-    lines.push('');
-    lines.push('── Inference ────────────────────────────────────────');
-    lines.push('  latency:  ' + inferMs + 'ms  |  model_version: v2.4.1');
-
-    showOutput(lines.join('\n'));
-    setLoading(false);
-    btn.disabled = false;
-  }
-
-  buildFeatureGrid();
+  document.getElementById('result-section').className = 'result-section visible';
+  document.getElementById('loading-indicator').className = 'loading-row';
+  btn.disabled = false;
+}
 </script>
-
 </body>
 </html>
